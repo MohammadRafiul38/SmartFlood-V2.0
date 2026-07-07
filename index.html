@@ -194,120 +194,94 @@
 
                     <div id="map">
 
-                        <button
-                            id="zoomIn"
-                            class="map-control"
-                            type="button">
+    <div class="map-controls">
 
-                            <i data-lucide="plus"></i>
+        <button
+            id="zoomIn"
+            class="map-control"
+            type="button">
 
-                        </button>
+            <i data-lucide="plus"></i>
 
-                        <button
-                            id="zoomOut"
-                            class="map-control"
-                            type="button">
+        </button>
 
-                            <i data-lucide="minus"></i>
+        <button
+            id="zoomOut"
+            class="map-control"
+            type="button">
 
-                        </button>
+            <i data-lucide="minus"></i>
 
-                        <button
-                            id="locateMe"
-                            class="map-control"
-                            type="button">
+        </button>
 
-                            <i data-lucide="crosshair"></i>
+        <button
+            id="locateMe"
+            class="map-control"
+            type="button">
 
-                        </button>
+            <i data-lucide="crosshair"></i>
 
-                        <button
-                            id="toggleLayers"
-                            class="map-control"
-                            type="button">
+        </button>
 
-                            <i data-lucide="layers-3"></i>
+        <button
+            id="toggleLayers"
+            class="map-control"
+            type="button">
 
-                        </button>
+            <i data-lucide="layers-3"></i>
 
-                        <button
-                            id="recenterMap"
-                            class="recenter-button"
-                            type="button">
+        </button>
 
-                            <i data-lucide="locate-fixed"></i>
+    </div>
 
-                            Recenter
+    <button
+        id="recenterMap"
+        class="recenter-button"
+        type="button">
 
-                        </button>
+        <i data-lucide="locate-fixed"></i>
 
-                        <div class="location-card">
+        Recenter
 
-                            <div class="location-icon">
+    </button>
 
-                                <i data-lucide="map-pin"></i>
+    <div class="location-card">
 
-                            </div>
+        <div class="location-icon">
 
-                            <div>
+            <i data-lucide="map-pin"></i>
 
-                                <h4>Your Location</h4>
+        </div>
 
-                                <p id="locationName">
+        <div>
 
-                                    Detecting...
+            <h4>Your Location</h4>
 
-                                </p>
+            <p id="locationName">
 
-                                <span
-                                    id="riskStatus"
-                                    class="risk-text">
+                Detecting...
 
-                                    Calculating...
+            </p>
 
-                                </span>
+            <span
+                id="riskStatus"
+                class="risk-text">
 
-                                <small id="lastUpdated">
+                Calculating...
 
-                                    Waiting for data
+            </span>
 
-                                </small>
+            <small id="lastUpdated">
 
-                            </div>
+                Waiting for data
 
-                        </div>
+            </small>
 
-                    </div>
+        </div>
 
-                </section>
+    </div>
 
-                <!-- ===========================
-                        AQUABOT
-                ============================ -->
-
-                <aside class="chat-panel">
-
-                    <div class="chat-header">
-
-                        <div class="chat-title">
-
-                            <i data-lucide="bot"></i>
-
-                            <div>
-
-                                <h2>AQUABOT</h2>
-
-                                <span class="online-status">
-
-                                    <span class="status-dot"></span>
-
-                                    Online
-
-                                </span>
-
-                            </div>
-
-                        </div>
+</div>
 
                         <button
                             id="chatMenu"
@@ -795,6 +769,79 @@
         </div>
 
     </footer>
+
+    <!-- Notifications -->
+<div id="notificationContainer"></div>
+
+<!-- Loading Screen -->
+<div id="loadingOverlay" class="hidden">
+    <div class="loader"></div>
+    <p>Loading SmartFlood...</p>
+</div>
+
+<!-- Settings Modal -->
+<div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Settings</h2>
+
+            <button
+                id="closeSettings"
+                type="button">
+
+                <i data-lucide="x"></i>
+
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <button
+                id="toggleTheme"
+                type="button">
+
+                Toggle Theme
+
+            </button>
+
+            <button
+                id="refreshDataBtn"
+                type="button">
+
+                Refresh Data
+
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Profile Dropdown -->
+<div
+    id="profileMenu"
+    class="profile-dropdown hidden">
+
+    <button type="button">
+
+        Profile
+
+    </button>
+
+    <button type="button">
+
+        About SmartFlood
+
+    </button>
+
+    <button type="button">
+
+        GitHub
+
+    </button>
+
+</div>
 
     <!-- =======================================================
                         JAVASCRIPT
