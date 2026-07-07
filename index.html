@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =========================================
+         SmartFlood
+         Home Page
+         ========================================= -->
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartFlood | Flood Monitoring & Disaster Awareness</title>
+
+    <meta name="description"
+        content="SmartFlood is a modern flood monitoring platform providing real-time weather, tide information, AI-powered flood assistance, and location-based flood risk assessment.">
+
+    <meta name="keywords"
+        content="Flood, SmartFlood, Weather, Tide, Disaster, Bangladesh, AquaBot, Flood Risk">
+
+    <meta name="author" content="Mohammad Rafiul Chowdhury">
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Leaflet -->
+
+    <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Lucide Icons -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+    <!-- ===========================
+         NAVBAR
+    ============================ -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+
+                <i data-lucide="waves"></i>
+
+            </div>
+
+            <div class="logo-text">
+
+                <h1>SmartFlood</h1>
+
+                <span>Flood Monitoring Platform</span>
+
+            </div>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a class="active"
+                        href="index.html">
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        Statistics
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="#">
+
+                        Resources
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="#">
+
+                        About
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="icon-btn">
+
+                <i data-lucide="bell"></i>
+
+            </button>
+
+            <button class="icon-btn">
+
+                <i data-lucide="settings-2"></i>
+
+            </button>
+
+            <button class="profile-btn">
+
+                <i data-lucide="user-round"></i>
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- ===========================
+         MAIN
+    ============================ -->
+
+    <main class="container">
+
+        <!-- ======================
+             MAP SECTION
+        ======================= -->
+
+        <section class="map-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+
+                        Live Flood Map
+
+                    </h2>
+
+                    <p>
+
+                        Monitor weather, tides and flood conditions
+                        in real time.
+
+                    </p>
+
+                </div>
+
+                <div class="status-chip">
+
+                    <span class="live-dot"></span>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+            <div id="map">
+
+                <!-- Leaflet will render here -->
+
+            </div>
+
+            <div class="map-footer">
+
+                <div class="legend">
+
+                    <div>
+
+                        <span class="legend-color low"></span>
+
+                        Low
+
+                    </div>
+
+                    <div>
+
+                        <span class="legend-color moderate"></span>
+
+                        Moderate
+
+                    </div>
+
+                    <div>
+
+                        <span class="legend-color high"></span>
+
+                        High
+
+                    </div>
+
+                    <div>
+
+                        <span class="legend-color extreme"></span>
+
+                        Extreme
+
+                    </div>
+
+                </div>
+
+                <button class="primary-btn">
+
+                    Refresh Data
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- ======================
+             CHATBOT
+        ======================= -->
+
+        <aside class="chat-panel">
+
+            <div class="chat-header">
+
+                <div class="assistant-info">
+
+                    <div class="assistant-icon">
+
+                        <i data-lucide="bot"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+
+                            AquaBot
+
+                        </h3>
+
+                        <span>
+
+                            Flood Safety Assistant
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <span class="assistant-status">
+
+                    Online
+
+                </span>
+
+            </div>
+
+            <div class="chat-body">
+
+                <div class="bot-message">
+
+                    Hello!
+
+                    I'm AquaBot.
+
+                    I can help you understand flood risks,
+                    weather conditions,
+                    tide information,
+                    emergency preparedness,
+                    and how to use SmartFlood.
+
+                </div>
+
+            </div>
+
+            <form class="chat-input">
+
+                <input
+                    type="text"
+                    placeholder="Ask about floods or weather...">
+
+                <button type="submit">
+
+                    <i data-lucide="send-horizontal"></i>
+
+                </button>
+
+            </form>
+
+        </aside>        <!-- ======================
+             CURRENT CONDITIONS
+        ======================= -->
+
+        <section class="conditions-section">
+
+            <article class="condition-card">
+
+                <div class="card-icon">
+                    <i data-lucide="cloud-rain"></i>
+                </div>
+
+                <div class="card-content">
+                    <span class="card-label">Rain Probability</span>
+                    <h3 id="rainProbability">--%</h3>
+                    <small>Current forecast</small>
+                </div>
+
+            </article>
+
+            <article class="condition-card">
+
+                <div class="card-icon">
+                    <i data-lucide="waves"></i>
+                </div>
+
+                <div class="card-content">
+                    <span class="card-label">Current Tide</span>
+                    <h3 id="tideLevel">-- m</h3>
+                    <small>Sea level</small>
+                </div>
+
+            </article>
+
+            <article class="condition-card">
+
+                <div class="card-icon">
+                    <i data-lucide="triangle-alert"></i>
+                </div>
+
+                <div class="card-content">
+                    <span class="card-label">Flood Risk</span>
+                    <h3 id="riskLevel">Unknown</h3>
+                    <small>Waiting for analysis</small>
+                </div>
+
+            </article>
+
+            <article class="condition-card">
+
+                <div class="card-icon">
+                    <i data-lucide="mountain"></i>
+                </div>
+
+                <div class="card-content">
+                    <span class="card-label">Elevation</span>
+                    <h3 id="elevation">-- m</h3>
+                    <small>Above sea level</small>
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- ======================
+             ACTIVE ALERTS
+        ======================= -->
+
+        <section class="alerts-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Active Alerts</h2>
+
+                    <p>
+                        Current warnings and system notifications.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="alerts-grid">
+
+                <article class="alert-card info">
+
+                    <div class="alert-icon">
+                        <i data-lucide="info"></i>
+                    </div>
+
+                    <div>
+
+                        <h4>No Active Flood Warnings</h4>
+
+                        <p>
+                            There are currently no active flood warnings
+                            for your monitored location.
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <article class="alert-card weather">
+
+                    <div class="alert-icon">
+                        <i data-lucide="cloud"></i>
+                    </div>
+
+                    <div>
+
+                        <h4>Weather Monitoring</h4>
+
+                        <p>
+                            Weather information will update automatically
+                            when live APIs are connected.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ===========================
+         FOOTER
+    ============================ -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+
+                <h3>SmartFlood</h3>
+
+                <p>
+                    A modern flood monitoring and disaster awareness
+                    platform powered by real-time environmental data.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#">Privacy</a>
+
+                <a href="#">Documentation</a>
+
+                <a href="#">Resources</a>
+
+                <a href="#">GitHub</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 SmartFlood. All rights reserved.
+            </span>
+
+            <span>
+                Developed by Mohammad Rafiul Chowdhury
+            </span>
+
+        </div>
+
+    </footer>
+
+    <!-- JavaScript -->
+
+    <script src="js/utils.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/floodRisk.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
