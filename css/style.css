@@ -1,0 +1,1209 @@
+/* ===========================================
+   SMARTFLOOD
+   Global Styles
+=========================================== */
+
+:root{
+
+    --primary:#2D5A3D;
+    --primary-dark:#21422D;
+    --secondary:#5D8468;
+
+    --background:#F4F6F3;
+    --surface:#FFFFFF;
+
+    --border:#D8DED8;
+
+    --text:#1E2A22;
+    --text-light:#647067;
+
+    --success:#3FA46A;
+    --warning:#D79A2B;
+    --danger:#D14A4A;
+
+    --shadow:
+        0 8px 28px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+    --transition:.25s ease;
+}
+
+/* ===========================================
+   RESET
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+
+}
+
+/* ===========================================
+   LINKS
+=========================================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+button{
+
+    font-family:inherit;
+
+    cursor:pointer;
+
+    border:none;
+
+}
+
+/* ===========================================
+   NAVBAR
+=========================================== */
+
+.navbar{
+
+    height:80px;
+
+    width:100%;
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 48px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    backdrop-filter:blur(20px);
+
+}
+
+/* ---------- Logo ---------- */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.logo-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:14px;
+
+    background:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+}
+
+.logo-text h1{
+
+    font-size:1.25rem;
+
+    font-weight:700;
+
+}
+
+.logo-text span{
+
+    color:var(--text-light);
+
+    font-size:.8rem;
+
+}
+
+/* ---------- Navigation ---------- */
+
+nav ul{
+
+    display:flex;
+
+    gap:34px;
+
+    list-style:none;
+
+}
+
+nav a{
+
+    color:var(--text-light);
+
+    font-weight:500;
+
+    transition:var(--transition);
+
+}
+
+nav a:hover{
+
+    color:var(--primary);
+
+}
+
+nav a.active{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+
+/* ---------- Right Buttons ---------- */
+
+.nav-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.icon-btn{
+
+    width:44px;
+
+    height:44px;
+
+    border-radius:12px;
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:var(--transition);
+
+}
+
+.icon-btn:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+.profile-btn{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+/* ===========================================
+   MAIN CONTAINER
+=========================================== */
+
+.container{
+
+    max-width:1500px;
+
+    margin:40px auto;
+
+    padding:0 28px;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:28px;
+
+}
+
+/* ===========================================
+   COMMON CARDS
+=========================================== */
+
+.map-section,
+.chat-panel,
+.conditions-section,
+.alerts-section{
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ===========================================
+   SECTION HEADER
+=========================================== */
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:26px 30px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.section-header h2{
+
+    font-size:1.35rem;
+
+    margin-bottom:4px;
+
+}
+
+.section-header p{
+
+    color:var(--text-light);
+
+    font-size:.92rem;
+
+}
+
+/* ===========================================
+   LIVE STATUS CHIP
+=========================================== */
+
+.status-chip{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:#EEF8F2;
+
+    color:var(--success);
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+}
+
+.live-dot{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:var(--success);
+
+    animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+    70%{
+
+        transform:scale(1.8);
+
+        opacity:.2;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ===========================================
+   BUTTONS
+=========================================== */
+
+.primary-btn{
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:13px 22px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.primary-btn:hover{
+
+    background:var(--primary-dark);
+
+}/* ===========================================
+   MAP SECTION
+=========================================== */
+
+.map-section{
+    overflow:hidden;
+}
+
+#map{
+    width:100%;
+    height:620px;
+    background:#DDE8DD;
+}
+
+.map-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 28px;
+
+    border-top:1px solid var(--border);
+
+}
+
+.legend{
+
+    display:flex;
+
+    gap:22px;
+
+    flex-wrap:wrap;
+
+}
+
+.legend div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:var(--text-light);
+
+    font-size:.9rem;
+
+}
+
+.legend-color{
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+}
+
+.low{
+    background:#42B883;
+}
+
+.moderate{
+    background:#F2C94C;
+}
+
+.high{
+    background:#F2994A;
+}
+
+.extreme{
+    background:#EB5757;
+}
+
+/* ===========================================
+   CHAT PANEL
+=========================================== */
+
+.chat-panel{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:760px;
+
+    overflow:hidden;
+
+}
+
+.chat-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.assistant-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.assistant-icon{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.assistant-info h3{
+
+    font-size:1.05rem;
+
+}
+
+.assistant-info span{
+
+    color:var(--text-light);
+
+    font-size:.85rem;
+
+}
+
+.assistant-status{
+
+    background:#EEF8F2;
+
+    color:var(--success);
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+/* ===========================================
+   CHAT BODY
+=========================================== */
+
+.chat-body{
+
+    flex:1;
+
+    padding:22px;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    background:#FAFBFA;
+
+}
+
+.bot-message{
+
+    max-width:90%;
+
+    background:white;
+
+    border:1px solid var(--border);
+
+    padding:18px;
+
+    border-radius:18px 18px 18px 6px;
+
+    line-height:1.7;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.04);
+
+}
+
+.user-message{
+
+    align-self:flex-end;
+
+    max-width:90%;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:18px;
+
+    border-radius:18px 18px 6px 18px;
+
+}
+
+/* ===========================================
+   CHAT INPUT
+=========================================== */
+
+.chat-input{
+
+    display:flex;
+
+    gap:12px;
+
+    padding:20px;
+
+    border-top:1px solid var(--border);
+
+    background:white;
+
+}
+
+.chat-input input{
+
+    flex:1;
+
+    height:54px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:0 18px;
+
+    font-size:.95rem;
+
+    outline:none;
+
+    transition:var(--transition);
+
+}
+
+.chat-input input:focus{
+
+    border-color:var(--primary);
+
+}
+
+.chat-input button{
+
+    width:54px;
+
+    height:54px;
+
+    border-radius:14px;
+
+    background:var(--primary);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:var(--transition);
+
+}
+
+.chat-input button:hover{
+
+    background:var(--primary-dark);
+
+}
+
+/* ===========================================
+   WEATHER / STATUS CARDS
+=========================================== */
+
+.conditions-section{
+
+    grid-column:1/-1;
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+    padding:28px;
+
+    margin-top:10px;
+
+}
+
+.condition-card{
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:24px;
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    transition:var(--transition);
+
+}
+
+.condition-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.card-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:16px;
+
+    background:#EEF4EF;
+
+    color:var(--primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.card-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.card-label{
+
+    color:var(--text-light);
+
+    font-size:.82rem;
+
+    margin-bottom:6px;
+
+}
+
+.card-content h3{
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    margin-bottom:4px;
+
+}
+
+.card-content small{
+
+    color:var(--text-light);
+
+}/* ===========================================
+   ALERTS SECTION
+=========================================== */
+
+.alerts-section{
+
+    grid-column:1/-1;
+
+    margin-top:30px;
+
+    overflow:hidden;
+
+}
+
+.alerts-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:22px;
+
+    padding:28px;
+
+}
+
+.alert-card{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+    padding:24px;
+
+    border-radius:18px;
+
+    border:1px solid var(--border);
+
+    transition:var(--transition);
+
+    background:white;
+
+}
+
+.alert-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.alert-icon{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+}
+
+.alert-card.info .alert-icon{
+
+    background:#EEF4FF;
+
+    color:#3578E5;
+
+}
+
+.alert-card.weather .alert-icon{
+
+    background:#EEF8F2;
+
+    color:var(--success);
+
+}
+
+.alert-card h4{
+
+    margin-bottom:8px;
+
+    font-size:1.05rem;
+
+}
+
+.alert-card p{
+
+    color:var(--text-light);
+
+    line-height:1.7;
+
+}
+
+/* ===========================================
+   FOOTER
+=========================================== */
+
+footer{
+
+    margin-top:60px;
+
+    background:var(--surface);
+
+    border-top:1px solid var(--border);
+
+}
+
+.footer-content{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    padding:50px 28px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:50px;
+
+}
+
+.footer-content h3{
+
+    margin-bottom:12px;
+
+}
+
+.footer-content p{
+
+    max-width:500px;
+
+    color:var(--text-light);
+
+}
+
+.footer-links{
+
+    display:flex;
+
+    gap:28px;
+
+    flex-wrap:wrap;
+
+}
+
+.footer-links a{
+
+    color:var(--text-light);
+
+    transition:var(--transition);
+
+}
+
+.footer-links a:hover{
+
+    color:var(--primary);
+
+}
+
+.footer-bottom{
+
+    border-top:1px solid var(--border);
+
+    padding:20px 28px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:var(--text-light);
+
+    font-size:.9rem;
+
+    max-width:1500px;
+
+    margin:auto;
+
+}
+
+/* ===========================================
+   SCROLLBAR
+=========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EEF2EE;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#B5C2B8;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--secondary);
+
+}
+
+/* Firefox */
+
+*{
+
+    scrollbar-width:thin;
+
+    scrollbar-color:#B5C2B8 #EEF2EE;
+
+}
+
+/* ===========================================
+   INPUTS
+=========================================== */
+
+input,
+textarea{
+
+    font-family:inherit;
+
+}
+
+input::placeholder{
+
+    color:#8C9890;
+
+}
+
+/* ===========================================
+   SELECTION
+=========================================== */
+
+::selection{
+
+    background:rgba(45,90,61,.18);
+
+    color:var(--text);
+
+}
+
+/* ===========================================
+   UTILITIES
+=========================================== */
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.flex{
+
+    display:flex;
+
+}
+
+.flex-between{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.w-100{
+
+    width:100%;
+
+}
+
+.mt-1{
+
+    margin-top:10px;
+
+}
+
+.mt-2{
+
+    margin-top:20px;
+
+}
+
+.mt-3{
+
+    margin-top:30px;
+
+}
+
+.mt-4{
+
+    margin-top:40px;
+
+}
+
+/* ===========================================
+   FADE-IN ANIMATION
+=========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.map-section,
+.chat-panel,
+.condition-card,
+.alert-card{
+
+    animation:fadeUp .6s ease;
+
+}
+
+/* ===========================================
+   FOCUS STATES
+=========================================== */
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible{
+
+    outline:3px solid rgba(45,90,61,.25);
+
+    outline-offset:3px;
+
+}
+
+/* ===========================================
+   IMAGE DEFAULTS
+=========================================== */
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+/* ===========================================
+   END OF FILE
+=========================================== 
