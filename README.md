@@ -4,12 +4,12 @@ SmartFlood is an advanced flood monitoring and disaster awareness system meant t
 
 ## Features
 
-• Interactive flood map
-• Live weather and tide monitoring
-• AI-driven flood safety assistant (AquaBot)
-• Location-aware flood data
-• Flood analytics dashboard
-• Terrain-based flood risk analysis (Work in progress)
+- Interactive flood map
+- Live weather and tide monitoring
+- AI-driven flood safety assistant (AquaBot)
+- Location-aware flood data
+- Flood analytics dashboard
+- Terrain-based flood risk analysis (Work in progress)
 
 ## Development
 
