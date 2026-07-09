@@ -8,31 +8,20 @@
 
     <title>SmartFlood</title>
 
-    <meta name="description"
-        content="SmartFlood - Real-time Flood Monitoring and Disaster Awareness Platform">
+    <meta name="description" content="SmartFlood - Real-time Flood Monitoring and Disaster Awareness Platform">
 
     <!-- Google Font -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Leaflet -->
-
-    <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <!-- Lucide -->
-
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- CSS -->
-
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/map.css">
     <link rel="stylesheet" href="css/chatbot.css">
@@ -43,77 +32,101 @@
 <body>
 
     <!-- =======================================================
-                            NAVBAR
+                            LOADING OVERLAY
     ======================================================== -->
+    <div id="loadingOverlay" class="hidden">
+        <div class="loader"></div>
+        <p>Loading SmartFlood...</p>
+    </div>
 
-    <header class="navbar">
+    <!-- =======================================================
+                            NOTIFICATIONS
+    ======================================================== -->
+    <div id="notificationContainer"></div>
 
-        <div class="logo-section">
+    <!-- =======================================================
+                            SETTINGS MODAL
+    ======================================================== -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
 
-            <div class="logo-icon">
-
-                <i data-lucide="waves"></i>
-
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="closeSettings" type="button">
+                    <i data-lucide="x"></i>
+                </button>
             </div>
 
-            <div>
+            <div class="modal-body">
+                <button id="toggleTheme" type="button">
+                    <i data-lucide="moon"></i>
+                    Toggle Theme
+                </button>
 
-                <h1>SMARTFLOOD</h1>
-
-                <span>Flood Aware. Stay Prepared.</span>
-
+                <button id="refreshDataBtn" type="button">
+                    <i data-lucide="refresh-cw"></i>
+                    Refresh Data
+                </button>
             </div>
 
         </div>
+    </div>
+
+    <!-- =======================================================
+                            PROFILE DROPDOWN
+    ======================================================== -->
+    <div id="profileMenu" class="profile-dropdown hidden">
+        <button type="button">
+            <i data-lucide="user"></i>
+            Profile
+        </button>
+        <button type="button">
+            <i data-lucide="info"></i>
+            About SmartFlood
+        </button>
+        <button type="button">
+            <i data-lucide="github"></i>
+            GitHub
+        </button>
+    </div>
+
+    <!-- =======================================================
+                            NAVBAR
+    ======================================================== -->
+    <header class="navbar">
+
+        <div class="logo-section">
+            <div class="logo">
+    <img src="assets/images/logo.svg"
+         alt="SmartFlood Logo">
+</div>
+            <div>
+                <h1>SMARTFLOOD</h1>
+                <span>Flood Aware. Stay Prepared.</span>
+            </div>
+        </div>
 
         <nav class="navigation">
-
-            <button
-                id="homeTab"
-                class="nav-btn active"
-                type="button">
-
+            <button id="homeTab" class="nav-btn active" type="button">
                 <i data-lucide="bot-message-square"></i>
-
                 <span>AquaBot</span>
-
             </button>
 
-            <button
-                id="statisticsTab"
-                class="nav-btn"
-                type="button">
-
+            <button id="statisticsTab" class="nav-btn" type="button">
                 <i data-lucide="chart-column"></i>
-
                 <span>Statistics</span>
-
             </button>
-
         </nav>
 
         <div class="right-controls">
-
-            <button
-                id="settingsBtn"
-                class="icon-button"
-                type="button">
-
+            <button id="settingsBtn" class="icon-button" type="button">
                 <i data-lucide="settings"></i>
-
                 <span>Settings</span>
-
             </button>
 
-            <button
-                id="profileBtn"
-                class="profile-button"
-                type="button">
-
+            <button id="profileBtn" class="profile-button" type="button">
                 <i data-lucide="circle-user-round"></i>
-
             </button>
-
         </div>
 
     </header>
@@ -123,200 +136,117 @@
         <!-- =======================================================
                         HOME PAGE
         ======================================================== -->
-
-        <section
-            id="homePage"
-            class="page active-page">
+        <section id="homePage" class="page active-page">
 
             <div class="top-grid">
 
                 <!-- ===========================
                         MAP PANEL
                 ============================ -->
-
                 <section class="map-panel">
 
                     <div class="panel-header">
-
                         <div class="panel-title">
-
                             <span class="live-dot"></span>
-
                             <h2>LIVE FLOOD RISK MAP</h2>
-
-                            <span class="realtime-tag">
-
-                                Real-time
-
-                            </span>
-
+                            <span class="realtime-tag">Real-time</span>
                         </div>
 
                         <div class="risk-legend">
-
                             <div>
-
                                 <span class="legend low"></span>
-
                                 Low
-
                             </div>
-
                             <div>
-
                                 <span class="legend medium"></span>
-
                                 Medium
-
                             </div>
-
                             <div>
-
                                 <span class="legend high"></span>
-
                                 High
-
                             </div>
-
                             <div>
-
                                 <span class="legend extreme"></span>
-
                                 Extreme
-
                             </div>
+                        </div>
+                    </div>
 
+                    <!-- Leaflet -->
+                    <div id="map">
+
+                        <div class="map-controls">
+                            <button id="zoomIn" 
+                                    class="map-control" 
+                                    type="button">
+                                <i data-lucide="plus"></i>
+                            </button>
+
+                            <button id="zoomOut" class="map-control" type="button">
+                                <i data-lucide="minus"></i>
+                            </button>
+
+                            <button id="locateMe" class="map-control" type="button">
+                                <i data-lucide="crosshair"></i>
+                            </button>
+
+                            <button id="toggleLayers" class="map-control" type="button">
+                                <i data-lucide="layers-3"></i>
+                            </button>
+                        </div>
+
+                        <button id="recenterMap" class="recenter-button" type="button">
+                            <i data-lucide="locate-fixed"></i>
+                            Recenter
+                        </button>
+
+                        <div class="location-card">
+                            <div class="location-icon">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <div>
+                                <h4>Your Location</h4>
+                                <p id="locationName">Detecting...</p>
+                                <span id="riskStatus" class="risk-text">Calculating...</span>
+                                <small id="lastUpdated">Waiting for data</small>
+                            </div>
                         </div>
 
                     </div>
 
-                    <!-- Leaflet -->
+                </section>
 
-                    <div id="map">
+                <!-- ===========================
+                        AQUABOT
+                ============================ -->
+                <aside class="chat-panel">
 
-    <div class="map-controls">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i data-lucide="bot-message-square"></i>
+                            <h2>AQUABOT</h2>
+                        </div>
 
-        <button
-            id="zoomIn"
-            class="map-control"
-            type="button">
-
-            <i data-lucide="plus"></i>
-
-        </button>
-
-        <button
-            id="zoomOut"
-            class="map-control"
-            type="button">
-
-            <i data-lucide="minus"></i>
-
-        </button>
-
-        <button
-            id="locateMe"
-            class="map-control"
-            type="button">
-
-            <i data-lucide="crosshair"></i>
-
-        </button>
-
-        <button
-            id="toggleLayers"
-            class="map-control"
-            type="button">
-
-            <i data-lucide="layers-3"></i>
-
-        </button>
-
-    </div>
-
-    <button
-        id="recenterMap"
-        class="recenter-button"
-        type="button">
-
-        <i data-lucide="locate-fixed"></i>
-
-        Recenter
-
-    </button>
-
-    <div class="location-card">
-
-        <div class="location-icon">
-
-            <i data-lucide="map-pin"></i>
-
-        </div>
-
-        <div>
-
-            <h4>Your Location</h4>
-
-            <p id="locationName">
-
-                Detecting...
-
-            </p>
-
-            <span
-                id="riskStatus"
-                class="risk-text">
-
-                Calculating...
-
-            </span>
-
-            <small id="lastUpdated">
-
-                Waiting for data
-
-            </small>
-
-        </div>
-
-    </div>
-
-</div>
-
-                        <button
-                            id="chatMenu"
-                            class="icon-button"
-                            type="button">
-
+                        <button id="chatMenu" 
+                                class="icon-button" 
+                                type="button">
                             <i data-lucide="ellipsis-vertical"></i>
-
                         </button>
-
                     </div>
 
-                    <div
-                        id="chatMessages"
-                        class="chat-messages">
-
+                    <div id="chatMessages" 
+                         class="chat-messages">
                         <!-- Bot messages inserted with JavaScript -->
-
                     </div>
 
                     <div class="chat-input-area">
+                        <input id="chatInput" 
+                               type="text" 
+                               placeholder="Ask about floods, tides, weather or elevation...">
 
-                        <input
-                            id="chatInput"
-                            type="text"
-                            placeholder="Ask about floods, tides, weather or elevation...">
-
-                        <button
-                            id="sendMessage"
-                            type="button">
-
+                        <button id="sendMessage" type="button">
                             <i data-lucide="send"></i>
-
                         </button>
-
                     </div>
 
                 </aside>
@@ -326,242 +256,117 @@
             <!-- ===========================
                     STATUS BAR
             ============================ -->
-
             <section class="status-bar">
 
                 <div class="status-item">
-
                     <i data-lucide="map-pinned"></i>
-
                     <div>
-
                         <small>Location</small>
-
-                        <strong id="statusLocation">
-
-                            Detecting...
-
-                        </strong>
-
+                        <strong id="statusLocation">Detecting...</strong>
                     </div>
-
                 </div>
 
                 <div class="status-item">
-
                     <i data-lucide="calendar-days"></i>
-
                     <div>
-
                         <small>Date</small>
-
-                        <strong id="statusDate">
-
-                            --
-
-                        </strong>
-
+                        <strong id="statusDate">--</strong>
                     </div>
-
                 </div>
 
                 <div class="status-item">
-
                     <i data-lucide="clock-3"></i>
-
                     <div>
-
                         <small>Time</small>
-
-                        <strong id="statusTime">
-
-                            --
-
-                        </strong>
-
+                        <strong id="statusTime">--</strong>
                     </div>
-
                 </div>
 
                 <div class="status-item">
-
                     <i data-lucide="database"></i>
-
                     <div>
-
                         <small>Connected APIs</small>
-
-                        <strong>
-
-                            Weather • Tide • Elevation
-
-                        </strong>
-
+                        <strong>Weather • Tide • Elevation</strong>
                     </div>
-
                 </div>
 
                 <div class="status-item">
-
                     <i data-lucide="shield-check"></i>
-
                     <div>
-
                         <small>Flood Status</small>
-
-                        <strong id="bottomRisk">
-
-                            Calculating...
-
-                        </strong>
-
+                        <strong id="bottomRisk">Calculating...</strong>
                     </div>
-
                 </div>
 
-            </section>        <!-- =======================================================
+            </section>
+
+        </section>
+
+        <!-- =======================================================
                         STATISTICS PAGE
              Hidden by default - JS toggles visibility
         ======================================================== -->
-
-        <section
-            id="statisticsPage"
-            class="page hidden-page">
+        <section id="statisticsPage" class="page hidden-page">
 
             <div class="statistics-grid">
 
                 <!-- ===========================
-                        ENVIRONMENT OVERVIEW
+                        ENVIRONMENT GRAPH + WEATHER CARDS
                 ============================ -->
-
                 <section class="stats-panel large-panel">
 
                     <div class="panel-header">
-
                         <div class="panel-title">
-
                             <i data-lucide="chart-line"></i>
-
                             <h2>ENVIRONMENT OVERVIEW</h2>
-
                         </div>
 
                         <div class="chart-range">
-
-                            <button
-                                class="range-btn active"
-                                type="button">
-
-                                24H
-
-                            </button>
-
-                            <button
-                                class="range-btn"
-                                type="button">
-
-                                7D
-
-                            </button>
-
-                            <button
-                                class="range-btn"
-                                type="button">
-
-                                30D
-
-                            </button>
-
+                            <button class="range-btn active" type="button">24H</button>
+                            <button class="range-btn" type="button">7D</button>
+                            <button class="range-btn" type="button">30D</button>
                         </div>
-
                     </div>
 
                     <div class="chart-container">
-
                         <canvas id="environmentChart"></canvas>
-
                     </div>
 
                     <div class="environment-cards">
 
                         <div class="environment-card">
-
                             <i data-lucide="thermometer"></i>
-
                             <span>Temperature</span>
-
-                            <strong id="temperatureValue">
-
-                                --
-
-                            </strong>
-
+                            <strong id="temperatureValue">--</strong>
                             <small>Current</small>
-
                         </div>
 
                         <div class="environment-card">
-
                             <i data-lucide="waves"></i>
-
                             <span>Tide Level</span>
-
-                            <strong id="tideValue">
-
-                                --
-
-                            </strong>
-
+                            <strong id="tideValue">--</strong>
                             <small>Current</small>
-
                         </div>
 
                         <div class="environment-card">
-
                             <i data-lucide="cloud-rain"></i>
-
                             <span>Rainfall</span>
-
-                            <strong id="rainValue">
-
-                                --
-
-                            </strong>
-
+                            <strong id="rainValue">--</strong>
                             <small>24 Hours</small>
-
                         </div>
 
                         <div class="environment-card">
-
                             <i data-lucide="droplets"></i>
-
                             <span>Humidity</span>
-
-                            <strong id="humidityValue">
-
-                                --
-
-                            </strong>
-
+                            <strong id="humidityValue">--</strong>
                             <small>Current</small>
-
                         </div>
 
                         <div class="environment-card">
-
                             <i data-lucide="wind"></i>
-
                             <span>Wind</span>
-
-                            <strong id="windValue">
-
-                                --
-
-                            </strong>
-
+                            <strong id="windValue">--</strong>
                             <small>Current</small>
-
                         </div>
 
                     </div>
@@ -571,155 +376,93 @@
                 <!-- ===========================
                         RIGHT SIDE
                 ============================ -->
-
                 <aside class="stats-sidebar">
 
-                    <!-- Risk Distribution -->
-
+                    <!-- ===========================
+                            RISK PANEL
+                    ============================ -->
                     <section class="stats-panel">
 
                         <div class="panel-header">
-
                             <div class="panel-title">
-
                                 <i data-lucide="shield-alert"></i>
-
                                 <h2>RISK & STATISTICS</h2>
-
                             </div>
-
                         </div>
 
                         <div class="pie-chart-container">
-
                             <canvas id="riskChart"></canvas>
-
                         </div>
 
                     </section>
 
-                    <!-- Detailed Tide -->
-
+                    <!-- ===========================
+                            TIDE PANEL
+                    ============================ -->
                     <section class="stats-panel">
 
                         <div class="panel-header">
-
                             <div class="panel-title">
-
                                 <i data-lucide="waves"></i>
-
                                 <h2>DETAILED TIDE INFO</h2>
-
                             </div>
-
                         </div>
 
                         <div class="small-chart">
-
                             <canvas id="tideChart"></canvas>
-
                         </div>
 
                     </section>
 
-                    <!-- Alerts -->
-
+                    <!-- ===========================
+                            ALERT PANEL
+                    ============================ -->
                     <section class="stats-panel alert-panel">
 
                         <div class="panel-header">
-
                             <div class="panel-title">
-
                                 <i data-lucide="triangle-alert"></i>
-
                                 <h2>FLOOD ALERTS</h2>
-
                             </div>
-
                         </div>
 
                         <div class="alert-box">
-
-                            <strong id="activeAlerts">
-
-                                0
-
-                            </strong>
-
-                            <span>
-
-                                Active Alerts
-
-                            </span>
-
-                            <button
-                                id="viewAlerts"
-                                type="button">
-
-                                View Details
-
-                            </button>
-
+                            <strong id="activeAlerts">0</strong>
+                            <span>Active Alerts</span>
+                            <button id="viewAlerts" type="button">View Details</button>
                         </div>
 
                     </section>
 
-                    <!-- Rain -->
-
+                    <!-- Rain Probability -->
                     <section class="stats-panel">
 
                         <div class="panel-header">
-
                             <div class="panel-title">
-
                                 <i data-lucide="cloud-rain"></i>
-
                                 <h2>RAIN PROBABILITY</h2>
-
                             </div>
-
                         </div>
 
                         <div class="rain-display">
-
-                            <strong id="rainProbability">
-
-                                --
-
-                            </strong>
-
-                            <span>
-
-                                Chance of Rain
-
-                            </span>
-
+                            <strong id="rainProbability">--</strong>
+                            <span>Chance of Rain</span>
                         </div>
 
                     </section>
 
                     <!-- Tide Schedule -->
-
                     <section class="stats-panel">
 
                         <div class="panel-header">
-
                             <div class="panel-title">
-
                                 <i data-lucide="clock"></i>
-
                                 <h2>HIGH / LOW TIDE</h2>
-
                             </div>
-
                         </div>
 
-                        <div
-                            id="tideSchedule"
-                            class="tide-schedule">
-
+                        <div id="tideSchedule" class="tide-schedule">
                             <!-- Filled by JavaScript -->
-
                         </div>
 
                     </section>
@@ -735,120 +478,26 @@
     <!-- =======================================================
                             FOOTER
     ======================================================== -->
-
     <footer class="footer">
 
         <div class="footer-left">
-
-            <span>
-
-                SmartFlood
-
-            </span>
-
+            <span>SmartFlood</span>
         </div>
 
         <div class="footer-center">
-
-            <span>
-
-                Real-time Flood Monitoring Platform
-
-            </span>
-
+            <span>Real-time Flood Monitoring Platform</span>
         </div>
 
         <div class="footer-right">
-
-            <span>
-
-                Version 2.0
-
-            </span>
-
+            <span>Version 2.0</span>
         </div>
 
     </footer>
 
-    <!-- Notifications -->
-<div id="notificationContainer"></div>
-
-<!-- Loading Screen -->
-<div id="loadingOverlay" class="hidden">
-    <div class="loader"></div>
-    <p>Loading SmartFlood...</p>
-</div>
-
-<!-- Settings Modal -->
-<div id="settingsModal" class="modal hidden">
-    <div class="modal-content">
-
-        <div class="modal-header">
-            <h2>Settings</h2>
-
-            <button
-                id="closeSettings"
-                type="button">
-
-                <i data-lucide="x"></i>
-
-            </button>
-        </div>
-
-        <div class="modal-body">
-
-            <button
-                id="toggleTheme"
-                type="button">
-
-                Toggle Theme
-
-            </button>
-
-            <button
-                id="refreshDataBtn"
-                type="button">
-
-                Refresh Data
-
-            </button>
-
-        </div>
-
-    </div>
-</div>
-
-<!-- Profile Dropdown -->
-<div
-    id="profileMenu"
-    class="profile-dropdown hidden">
-
-    <button type="button">
-
-        Profile
-
-    </button>
-
-    <button type="button">
-
-        About SmartFlood
-
-    </button>
-
-    <button type="button">
-
-        GitHub
-
-    </button>
-
-</div>
-
     <!-- =======================================================
                         JAVASCRIPT
     ======================================================== -->
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="js/utils.js"></script>
@@ -859,9 +508,7 @@
     <script src="js/app.js"></script>
 
     <script>
-
         lucide.createIcons();
-
     </script>
 
 </body>
