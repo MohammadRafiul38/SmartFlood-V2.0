@@ -3,7 +3,7 @@
 /*==========================================================
     SmartFlood
     app.js
-    Part 1 - Core Application
+    Core Application
 ==========================================================*/
 
 const App = {
@@ -35,47 +35,48 @@ const App = {
 
     cacheDOM() {
 
-        // Pages
-        this.elements.homePage =
-            document.getElementById("homePage");
+        const ids = {
 
-        this.elements.statisticsPage =
-            document.getElementById("statisticsPage");
+            // Pages
+            homePage: "homePage",
+            statisticsPage: "statisticsPage",
 
+            // Navigation
+            homeTab: "homeTab",
+            statisticsTab: "statisticsTab",
 
-        // Navigation
-        this.elements.homeTab =
-            document.getElementById("homeTab");
+            // Settings
+            settingsBtn: "settingsBtn",
+            settingsModal: "settingsModal",
+            closeSettings: "closeSettings",
 
-        this.elements.statisticsTab =
-            document.getElementById("statisticsTab");
+            // Profile
+            profileBtn: "profileBtn",
+            profileMenu: "profileMenu",
 
+            // Overlay
+            loadingOverlay: "loadingOverlay",
+            notificationContainer: "notificationContainer",
 
-        // Settings
-        this.elements.settingsBtn =
-            document.getElementById("settingsBtn");
+            // Clock
+            statusDate: "statusDate",
+            statusTime: "statusTime"
 
-        this.elements.settingsModal =
-            document.getElementById("settingsModal");
+        };
 
-        this.elements.closeSettings =
-            document.getElementById("closeSettings");
+        for (const key in ids) {
 
+            this.elements[key] = document.getElementById(ids[key]);
 
-        // Profile
-        this.elements.profileBtn =
-            document.getElementById("profileBtn");
+            if (!this.elements[key]) {
 
-        this.elements.profileMenu =
-            document.getElementById("profileMenu");
+                console.error(
+                    `App.cacheDOM: no element with id "${ids[key]}" found (expected for "${key}")`
+                );
 
+            }
 
-        // Overlay
-        this.elements.loadingOverlay =
-            document.getElementById("loadingOverlay");
-
-        this.elements.notificationContainer =
-            document.getElementById("notificationContainer");
+        }
 
     },
 
@@ -187,7 +188,288 @@ const App = {
 
 
     /*======================================================
-        HELPERS
+        SETTINGS MODAL
+    ======================================================*/
+
+    openSettings() {
+
+        this.elements.settingsModal.classList.remove("hidden");
+
+        this.state.settingsOpen = true;
+
+    },
+
+
+
+    closeSettings() {
+
+        this.elements.settingsModal.classList.add("hidden");
+
+        this.state.settingsOpen = false;
+
+    },
+
+
+
+    toggleSettings(event) {
+
+        // Stop this click from also being seen by the
+        // document-level "click outside" listener below,
+        // which would otherwise close the modal on the
+        // same click that just opened it.
+        if (event) event.stopPropagation();
+
+        if (this.state.settingsOpen) {
+
+            this.closeSettings();
+
+        } else {
+
+            this.openSettings();
+
+        }
+
+    },
+
+
+
+    /*======================================================
+        PROFILE MENU
+    ======================================================*/
+
+    openProfileMenu() {
+
+        this.elements.profileMenu.classList.remove("hidden");
+
+        this.state.profileOpen = true;
+
+    },
+
+
+
+    closeProfileMenu() {
+
+        this.elements.profileMenu.classList.add("hidden");
+
+        this.state.profileOpen = false;
+
+    },
+
+
+
+    toggleProfileMenu(event) {
+
+        if (event) event.stopPropagation();
+
+        if (this.state.profileOpen) {
+
+            this.closeProfileMenu();
+
+        } else {
+
+            this.openProfileMenu();
+
+        }
+
+    },
+
+
+
+    /*======================================================
+        LOADING OVERLAY
+    ======================================================*/
+
+    showLoading() {
+
+        this.elements.loadingOverlay.classList.remove("hidden");
+
+        this.state.loading = true;
+
+    },
+
+
+
+    hideLoading() {
+
+        this.elements.loadingOverlay.classList.add("hidden");
+
+        this.state.loading = false;
+
+    },
+
+
+
+    /*======================================================
+        GLOBAL UI EVENTS
+    ======================================================*/
+
+    initializeUI() {
+
+        /* Settings */
+
+        this.elements.settingsBtn.addEventListener(
+
+            "click",
+
+            (event) => {
+
+                this.toggleSettings(event);
+
+            }
+
+        );
+
+
+
+        this.elements.closeSettings.addEventListener(
+
+            "click",
+
+            () => {
+
+                this.closeSettings();
+
+            }
+
+        );
+
+
+
+        /* Profile */
+
+        this.elements.profileBtn.addEventListener(
+
+            "click",
+
+            (event) => {
+
+                this.toggleProfileMenu(event);
+
+            }
+
+        );
+
+
+
+        /* Escape Key */
+
+        document.addEventListener(
+
+            "keydown",
+
+            (event) => {
+
+                if (event.key !== "Escape") return;
+
+                if (this.state.settingsOpen) this.closeSettings();
+
+                if (this.state.profileOpen) this.closeProfileMenu();
+
+            }
+
+        );
+
+
+
+        /* Outside Click */
+
+        document.addEventListener(
+
+            "click",
+
+            (event) => {
+
+                if (
+
+                    this.state.settingsOpen &&
+
+                    !this.elements.settingsModal.contains(event.target)
+
+                ) {
+
+                    this.closeSettings();
+
+                }
+
+
+
+                if (
+
+                    this.state.profileOpen &&
+
+                    !this.elements.profileMenu.contains(event.target) &&
+
+                    !this.elements.profileBtn.contains(event.target)
+
+                ) {
+
+                    this.closeProfileMenu();
+
+                }
+
+            }
+
+        );
+
+    },
+
+
+
+    /*======================================================
+        LIVE DATE & TIME
+    ======================================================*/
+
+    updateDateTime() {
+
+        const now = new Date();
+
+        if (this.elements.statusDate) {
+
+            this.elements.statusDate.textContent =
+                now.toLocaleDateString(undefined, {
+
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+
+                });
+
+        }
+
+        if (this.elements.statusTime) {
+
+            this.elements.statusTime.textContent =
+                now.toLocaleTimeString([], {
+
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+
+                });
+
+        }
+
+    },
+
+
+
+    startClock() {
+
+        this.updateDateTime();
+
+        setInterval(() => {
+
+            this.updateDateTime();
+
+        }, 1000);
+
+    },
+
+
+
+    /*======================================================
+        PAGE HELPERS
     ======================================================*/
 
     getCurrentPage() {
@@ -214,39 +496,120 @@ const App = {
 
 
 
+    refreshCurrentPage() {
+
+        if (this.state.currentPage === "home") {
+
+            console.log("Refreshing Home");
+
+        }
+
+        else {
+
+            console.log("Refreshing Statistics");
+
+        }
+
+    },
+
+
+
+    /*======================================================
+        PLACEHOLDER INITIALIZERS
+        (Implemented in js/map.js, js/weather.js,
+        js/floodRisk.js, js/chatbot.js)
+    ======================================================*/
+
+    initializeMap() {
+
+        console.log("Map module pending...");
+
+    },
+
+
+
+    initializeWeather() {
+
+        console.log("Weather module pending...");
+
+    },
+
+
+
+    initializeFloodRisk() {
+
+        console.log("Flood Risk module pending...");
+
+    },
+
+
+
+    initializeChatbot() {
+
+        console.log("Chatbot module pending...");
+
+    },
+
+
+
+    /*======================================================
+        STARTUP
+    ======================================================*/
+
+    start() {
+
+        this.startClock();
+
+        this.initializeMap();
+
+        this.initializeWeather();
+
+        this.initializeFloodRisk();
+
+        this.initializeChatbot();
+
+    },
+
+
+
     /*======================================================
         INITIALIZE
     ======================================================*/
 
- initialize() {
+    initialize() {
 
-    console.log("--------------------------------");
-    console.log("Starting SmartFlood...");
-    console.log("--------------------------------");
+        console.log("--------------------------------");
+        console.log("Starting SmartFlood...");
+        console.log("--------------------------------");
 
-    this.cacheDOM();
+        this.cacheDOM();
 
-    this.initializeNavigation();
+        this.showLoading();
 
-    this.initializeUI();
+        this.initializeNavigation();
 
-    // Ensure Home is active
-    this.hideAllPages();
+        this.initializeUI();
 
-    this.elements.homePage.classList.remove("hidden-page");
-    this.elements.homePage.classList.add("active-page");
+        // Ensure Home is active
+        this.hideAllPages();
 
-    this.activateNavigation(this.elements.homeTab);
+        this.elements.homePage.classList.remove("hidden-page");
+        this.elements.homePage.classList.add("active-page");
 
-    this.state.currentPage = "home";
+        this.activateNavigation(this.elements.homeTab);
 
-    this.start();
+        this.state.currentPage = "home";
 
-    console.log("DOM Cached");
-    console.log("Navigation Ready");
-    console.log("Application Ready");
+        this.start();
 
-}
+        this.hideLoading();
+
+        console.log("DOM Cached");
+        console.log("Navigation Ready");
+        console.log("Application Ready");
+
+    }
+
 };
 
 
@@ -274,395 +637,12 @@ document.addEventListener(
     }
 
 );
-/*==========================================================
-    SETTINGS MODAL
-==========================================================*/
-
-App.openSettings = function () {
-
-    this.elements.settingsModal.classList.remove("hidden");
-
-    this.state.settingsOpen = true;
-
-};
-
-App.closeSettings = function () {
-
-    this.elements.settingsModal.classList.add("hidden");
-
-    this.state.settingsOpen = false;
-
-};
-
-App.toggleSettings = function () {
-
-    if (this.state.settingsOpen) {
-
-        this.closeSettings();
-
-    } else {
-
-        this.openSettings();
-
-    }
-
-};
-
-
-
-/*==========================================================
-    PROFILE MENU
-==========================================================*/
-
-App.openProfileMenu = function () {
-
-    this.elements.profileMenu.classList.remove("hidden");
-
-    this.state.profileOpen = true;
-
-};
-
-App.closeProfileMenu = function () {
-
-    this.elements.profileMenu.classList.add("hidden");
-
-    this.state.profileOpen = false;
-
-};
-
-App.toggleProfileMenu = function () {
-
-    if (this.state.profileOpen) {
-
-        this.closeProfileMenu();
-
-    } else {
-
-        this.openProfileMenu();
-
-    }
-
-};
-
-
-
-/*==========================================================
-    LOADING OVERLAY
-==========================================================*/
-
-App.showLoading = function () {
-
-    this.elements.loadingOverlay.classList.remove("hidden");
-
-    this.state.loading = true;
-
-};
-
-App.hideLoading = function () {
-
-    this.elements.loadingOverlay.classList.add("hidden");
-
-    this.state.loading = false;
-
-};
-
-
-
-/*==========================================================
-    GLOBAL UI EVENTS
-==========================================================*/
-
-App.initializeUI = function () {
-
-    /* Settings */
-
-    this.elements.settingsBtn.addEventListener(
-
-        "click",
-
-        () => {
-
-            this.toggleSettings();
-
-        }
-
-    );
-
-
-
-    this.elements.closeSettings.addEventListener(
-
-        "click",
-
-        () => {
-
-            this.closeSettings();
-
-        }
-
-    );
-
-
-
-    /* Profile */
-
-    this.elements.profileBtn.addEventListener(
-
-        "click",
-
-        () => {
-
-            this.toggleProfileMenu();
-
-        }
-
-    );
-
-
-
-    /* Escape Key */
-
-    document.addEventListener(
-
-        "keydown",
-
-        (event) => {
-
-            if (event.key !== "Escape") return;
-
-            this.closeSettings();
-
-            this.closeProfileMenu();
-
-        }
-
-    );
-
-
-
-    /* Outside Click */
-
-    document.addEventListener(
-
-        "click",
-
-        (event) => {
-
-            if (
-
-                this.state.settingsOpen &&
-
-                !this.elements.settingsModal.contains(event.target) &&
-
-                event.target !== this.elements.settingsBtn
-
-            ) {
-
-                this.closeSettings();
-
-            }
-
-
-
-            if (
-
-                this.state.profileOpen &&
-
-                !this.elements.profileMenu.contains(event.target) &&
-
-                !this.elements.profileBtn.contains(event.target)
-
-            ) {
-
-                this.closeProfileMenu();
-
-            }
-
-        }
-
-    );
-
-};
-/*==========================================================
-    LIVE DATE & TIME
-==========================================================*/
-
-App.updateDateTime = function () {
-
-    const now = new Date();
-
-    const dateElement =
-        document.getElementById("statusDate");
-
-    const timeElement =
-        document.getElementById("statusTime");
-
-    if (dateElement) {
-
-        dateElement.textContent =
-            now.toLocaleDateString(undefined, {
-
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-
-            });
-
-    }
-
-    if (timeElement) {
-
-        timeElement.textContent =
-            now.toLocaleTimeString([], {
-
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-
-            });
-
-    }
-
-};
-
-
-
-/*==========================================================
-    START CLOCK
-==========================================================*/
-
-App.startClock = function () {
-
-    this.updateDateTime();
-
-    setInterval(() => {
-
-        this.updateDateTime();
-
-    }, 1000);
-
-};
-
-
-
-/*==========================================================
-    PAGE HELPERS
-==========================================================*/
-
-App.refreshCurrentPage = function () {
-
-    if (this.state.currentPage === "home") {
-
-        console.log("Refreshing Home");
-
-    }
-
-    else {
-
-        console.log("Refreshing Statistics");
-
-    }
-
-};
-
-
-
-/*==========================================================
-    PLACEHOLDER INITIALIZERS
-    (Implemented later)
-==========================================================*/
-
-App.initializeMap = function () {
-
-    console.log("Map module pending...");
-
-};
-
-
-
-App.initializeWeather = function () {
-
-    console.log("Weather module pending...");
-
-};
-
-
-
-App.initializeFloodRisk = function () {
-
-    console.log("Flood Risk module pending...");
-
-};
-
-
-
-App.initializeChatbot = function () {
-
-    console.log("Chatbot module pending...");
-
-};
-
-
-
-/*==========================================================
-    STARTUP
-==========================================================*/
-
-App.start = function () {
-
-    this.startClock();
-
-    this.initializeMap();
-
-    this.initializeWeather();
-
-    this.initializeFloodRisk();
-
-    this.initializeChatbot();
-
-};
-
-
-
-/*==========================================================
-    UPDATE INITIALIZE()
-==========================================================*/
-
-/*
-Inside App.initialize()
-
-AFTER:
-
-this.initializeNavigation();
-
-this.initializeUI();
-
-ADD:
-
-this.start();
-
-*/
 
 
 
 /*==========================================================
     WINDOW EVENTS
 ==========================================================*/
-
-window.addEventListener(
-
-    "resize",
-
-    () => {
-
-        console.log("Window resized");
-
-    }
-
-);
-
-
 
 window.addEventListener(
 
