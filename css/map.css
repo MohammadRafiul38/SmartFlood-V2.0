@@ -1,0 +1,353 @@
+/*==================================================
+    SmartFlood
+    map.css
+    Flood Map Panel
+==================================================*/
+
+/*==================================================
+    MAP PANEL
+==================================================*/
+
+.map-panel{
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-large);
+
+    box-shadow:var(--shadow);
+
+    padding:24px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:720px;
+
+}
+
+.live-dot{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:var(--success);
+
+    animation:pulse 2s infinite;
+
+}
+
+.realtime-tag{
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:rgba(46,139,87,.18);
+
+    color:var(--success);
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+.risk-legend{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    color:var(--text-secondary);
+
+    font-size:.82rem;
+
+}
+
+.risk-legend div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.legend{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+}
+
+.legend.low{
+
+    background:#4CAF50;
+
+}
+
+.legend.medium{
+
+    background:#F6C453;
+
+}
+
+.legend.high{
+
+    background:#F28C38;
+
+}
+
+.legend.extreme{
+
+    background:#D64545;
+
+}
+
+/*==================================================
+    MAP
+==================================================*/
+
+#map{
+
+    position:relative;
+
+    flex:1;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:#14202B;
+
+    min-height:620px;
+
+}
+
+/*==================================================
+    MAP CONTROLS
+==================================================*/
+
+.map-controls{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    z-index:600;
+
+}
+
+.map-control{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:14px;
+
+    background:rgba(30,41,53,.92);
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    backdrop-filter:blur(10px);
+
+}
+
+.map-control:hover{
+
+    background:var(--primary);
+
+    transform:translateY(-2px);
+
+}
+
+.recenter-button{
+
+    position:absolute;
+
+    left:20px;
+
+    bottom:20px;
+
+    height:46px;
+
+    padding:0 18px;
+
+    border-radius:14px;
+
+    background:rgba(30,41,53,.92);
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    z-index:600;
+
+}
+
+.recenter-button:hover{
+
+    background:var(--primary);
+
+}
+
+/*==================================================
+    LOCATION CARD
+==================================================*/
+
+.location-card{
+
+    position:absolute;
+
+    left:20px;
+
+    top:20px;
+
+    z-index:600;
+
+    width:280px;
+
+    background:rgba(22,33,43,.95);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:18px;
+
+    display:flex;
+
+    gap:14px;
+
+    align-items:flex-start;
+
+}
+
+.location-icon{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:14px;
+
+    background:rgba(46,139,87,.15);
+
+    color:var(--primary);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-shrink:0;
+
+}
+
+.location-card h4{
+
+    margin-bottom:4px;
+
+}
+
+.location-card p{
+
+    margin-bottom:8px;
+
+}
+
+.risk-text{
+
+    display:inline-flex;
+
+    padding:5px 10px;
+
+    border-radius:999px;
+
+    background:rgba(246,196,83,.12);
+
+    color:var(--warning);
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+}
+
+/*==================================================
+    RISK ZONE MARKERS (placeholder overlay)
+==================================================*/
+
+.risk-zone{
+
+    transition:opacity .2s ease;
+
+}
+
+.risk-zone-low{
+
+    filter:drop-shadow(0 0 6px rgba(76,175,80,.75));
+
+}
+
+.risk-zone-medium{
+
+    filter:drop-shadow(0 0 6px rgba(246,196,83,.75));
+
+}
+
+.risk-zone-high{
+
+    filter:drop-shadow(0 0 6px rgba(242,140,56,.75));
+
+}
+
+.risk-zone-extreme{
+
+    filter:drop-shadow(0 0 6px rgba(214,69,69,.8));
+
+}
+
+.user-location-dot{
+
+    filter:drop-shadow(0 0 8px rgba(46,139,87,.9));
+
+}

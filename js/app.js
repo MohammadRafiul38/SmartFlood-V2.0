@@ -522,7 +522,15 @@ const App = {
 
     initializeMap() {
 
-        console.log("Map module pending...");
+        if (typeof MapModule !== "undefined") {
+
+            MapModule.init();
+
+        } else {
+
+            console.log("Map module pending...");
+
+        }
 
     },
 
