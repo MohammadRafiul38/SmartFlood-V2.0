@@ -133,7 +133,7 @@ const MapModule = {
 
             this.elements.locateMe.addEventListener(
                 "click",
-                () => this.locateUser()
+                () => this.locateUser(true)
             );
 
         }
@@ -142,7 +142,7 @@ const MapModule = {
 
             this.elements.recenterMap.addEventListener(
                 "click",
-                () => this.locateUser()
+                () => this.locateUser(true)
             );
 
         }
@@ -164,7 +164,7 @@ const MapModule = {
         GEOLOCATION
     ======================================================*/
 
-    locateUser() {
+    locateUser(forceRefresh = false) {
 
         if (this.elements.locationName) {
 
@@ -172,43 +172,48 @@ const MapModule = {
 
         }
 
-        if (!navigator.geolocation) {
+        if (typeof Utils === "undefined") {
 
-            this.handleLocationUnavailable("Geolocation not supported");
+            this.handleLocationUnavailable("Location service unavailable");
 
             return;
 
         }
 
-        navigator.geolocation.getCurrentPosition(
+        Utils.getUserLocation(forceRefresh).then((location) => {
 
-            (position) => this.handleLocationSuccess(position),
+            if (location.error || location.lat === null) {
 
-            (error) => this.handleLocationError(error),
+                this.handleLocationUnavailable(
 
-            {
-                enableHighAccuracy: true,
-                timeout: 8000
+                    location.error === "denied"
+                        ? "Permission denied"
+                        : "Location unavailable"
+
+                );
+
+                return;
+
             }
 
-        );
+            this.handleLocationSuccess(location.lat, location.lng);
+
+        });
 
     },
 
 
 
-    handleLocationSuccess(position) {
+    handleLocationSuccess(lat, lng) {
 
-        const { latitude, longitude } = position.coords;
+        this.setUserLocation(lat, lng);
 
-        this.setUserLocation(latitude, longitude);
-
-        this.renderRiskZones([latitude, longitude]);
+        this.renderRiskZones([lat, lng]);
 
         if (this.elements.locationName) {
 
             this.elements.locationName.textContent =
-                `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+                `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 
         }
 
@@ -221,22 +226,6 @@ const MapModule = {
                 })}`;
 
         }
-
-    },
-
-
-
-    handleLocationError(error) {
-
-        console.warn("MapModule: geolocation error", error.message);
-
-        this.handleLocationUnavailable(
-
-            error.code === error.PERMISSION_DENIED
-                ? "Permission denied"
-                : "Location unavailable"
-
-        );
 
     },
 

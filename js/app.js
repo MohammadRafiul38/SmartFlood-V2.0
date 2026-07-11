@@ -141,6 +141,12 @@ const App = {
 
         this.state.currentPage = "statistics";
 
+        if (typeof WeatherModule !== "undefined") {
+
+            WeatherModule.handleStatisticsPageShown();
+
+        }
+
         console.log("Switched to Statistics");
 
     },
@@ -538,7 +544,15 @@ const App = {
 
     initializeWeather() {
 
-        console.log("Weather module pending...");
+        if (typeof WeatherModule !== "undefined") {
+
+            WeatherModule.init();
+
+        } else {
+
+            console.log("Weather module pending...");
+
+        }
 
     },
 
