@@ -558,11 +558,19 @@ const App = {
 
 
 
-    initializeFloodRisk() {
+initializeFloodRisk() {
+
+    if (typeof FloodRiskModule !== "undefined") {
+
+        FloodRiskModule.init();
+
+    } else {
 
         console.log("Flood Risk module pending...");
 
-    },
+    }
+
+},
 
 
 
